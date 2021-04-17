@@ -8,7 +8,7 @@ namespace DataProcessing
     {
         static void Main(string[] args)
         {
-            if (File.Exists("students1.txt") && File.Exists("students2.txt") && File.Exists("students3.txt") && File.Exists("students4.txt"))
+            if (File.Exists("students1.txt") || File.Exists("students2.txt") || File.Exists("students3.txt") || File.Exists("students4.txt"))
             {
                 File.Delete("students1.txt");
                 File.Delete("students2.txt");
@@ -23,12 +23,7 @@ namespace DataProcessing
                 fs3.Close();
                 fs4.Close();
 
-            }
-
-            generateStudents("students1.txt", 10000);
-            //generateStudents("students2.txt", 100000);
-            //generateStudents("students3.txt", 1000000);
-            //generateStudents("students4.txt", 10000000);
+            }          
             List<Student> studentList = new List<Student>();
             bool menuFlag = true;
 
@@ -67,7 +62,30 @@ namespace DataProcessing
 
                         break;
                     case "2":
-                        studentList = addStudentsFromFile("students1.txt").ToList();
+                        Console.Clear();
+                        Console.WriteLine("1. File with 10000 students");
+                        Console.WriteLine("2. File with 100000 students");
+                        Console.WriteLine("3. File with 1000000 students");
+                        Console.WriteLine("4. File with 10000000 students");
+                        switch (Console.ReadLine())
+                        {
+                            case "1":
+                                generateStudents("students1.txt", 10000);
+                                studentList = addStudentsFromFile("students1.txt").ToList();
+                                break;
+                            case "2":
+                                generateStudents("students2.txt", 100000);
+                                studentList = addStudentsFromFile("students2.txt").ToList();
+                                break;
+                            case "3":
+                                generateStudents("students3.txt", 1000000);
+                                studentList = addStudentsFromFile("students3.txt").ToList();
+                                break;
+                            case "4":
+                                generateStudents("students4.txt", 10000000);
+                                studentList = addStudentsFromFile("students4.txt").ToList();
+                                break;
+                        }
                         break;
                     case "3":
                         displayStudents(studentList);
@@ -124,8 +142,9 @@ namespace DataProcessing
 
                     stream.WriteLine("Surname" + i + " Name" + i + " " + rnd.Next(1, 11) + " " + rnd.Next(1, 11) + " " + rnd.Next(1, 11) + " " + rnd.Next(1, 11) + " " + rnd.Next(1, 11) + " " + rnd.Next(1, 11));
                 }
-
+                stream.Close();
             }
+            
         }
 
         public static void displayStudents(List<Student> studentList)
