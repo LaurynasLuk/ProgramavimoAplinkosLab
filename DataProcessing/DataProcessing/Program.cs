@@ -92,28 +92,37 @@ namespace DataProcessing
 
                         break;
                     case "2":
-
-                        using (var sr = new StreamReader("students.txt"))
+                        try
                         {
-                            sr.ReadLine();
-                            while (!sr.EndOfStream)
+                            using (var sr = new StreamReader("studdents.txt"))
                             {
-                                Student studentFile = new Student();
-                                var line = sr.ReadLine();
-                                var values = line.Split();
-                                if (line.Split().Length > 2)
+                                sr.ReadLine();
+                                while (!sr.EndOfStream)
                                 {
-                                    studentFile.LastName = values[0];
-                                    studentFile.Name = values[1];
-                                    for (int i = 2; i < 8; i++)
+                                    Student studentFile = new Student();
+                                    var line = sr.ReadLine();
+                                    var values = line.Split();
+                                    if (line.Split().Length > 2)
                                     {
-                                        studentFile.results.Add(Int32.Parse(values[i]));
+                                        studentFile.LastName = values[0];
+                                        studentFile.Name = values[1];
+                                        for (int i = 2; i < 8; i++)
+                                        {
+                                            studentFile.results.Add(Int32.Parse(values[i]));
+                                        }
+                                        studentList.Add(studentFile);
                                     }
-                                    studentList.Add(studentFile);
                                 }
+                                Console.Clear();
+                                Console.WriteLine("Added students from file");
+                                Console.ReadKey();
                             }
+                        }
+                        catch (IOException e)
+                        {
                             Console.Clear();
-                            Console.WriteLine("Added students from file");
+                            Console.WriteLine("The file could not be read:");
+                            Console.WriteLine(e.Message);
                             Console.ReadKey();
                         }
                         break;
