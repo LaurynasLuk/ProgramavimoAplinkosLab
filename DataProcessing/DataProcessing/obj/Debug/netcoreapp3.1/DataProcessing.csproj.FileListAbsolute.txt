@@ -1,0 +1,13 @@
+C:\Users\Laurynas\Documents\GitHub\ProgramavimoAplinkosLab\DataProcessing\DataProcessing\bin\Debug\netcoreapp3.1\DataProcessing.exe
+C:\Users\Laurynas\Documents\GitHub\ProgramavimoAplinkosLab\DataProcessing\DataProcessing\bin\Debug\netcoreapp3.1\DataProcessing.deps.json
+C:\Users\Laurynas\Documents\GitHub\ProgramavimoAplinkosLab\DataProcessing\DataProcessing\bin\Debug\netcoreapp3.1\DataProcessing.runtimeconfig.json
+C:\Users\Laurynas\Documents\GitHub\ProgramavimoAplinkosLab\DataProcessing\DataProcessing\bin\Debug\netcoreapp3.1\DataProcessing.runtimeconfig.dev.json
+C:\Users\Laurynas\Documents\GitHub\ProgramavimoAplinkosLab\DataProcessing\DataProcessing\bin\Debug\netcoreapp3.1\DataProcessing.dll
+C:\Users\Laurynas\Documents\GitHub\ProgramavimoAplinkosLab\DataProcessing\DataProcessing\bin\Debug\netcoreapp3.1\DataProcessing.pdb
+C:\Users\Laurynas\Documents\GitHub\ProgramavimoAplinkosLab\DataProcessing\DataProcessing\obj\Debug\netcoreapp3.1\DataProcessing.csprojAssemblyReference.cache
+C:\Users\Laurynas\Documents\GitHub\ProgramavimoAplinkosLab\DataProcessing\DataProcessing\obj\Debug\netcoreapp3.1\DataProcessing.AssemblyInfoInputs.cache
+C:\Users\Laurynas\Documents\GitHub\ProgramavimoAplinkosLab\DataProcessing\DataProcessing\obj\Debug\netcoreapp3.1\DataProcessing.AssemblyInfo.cs
+C:\Users\Laurynas\Documents\GitHub\ProgramavimoAplinkosLab\DataProcessing\DataProcessing\obj\Debug\netcoreapp3.1\DataProcessing.csproj.CoreCompileInputs.cache
+C:\Users\Laurynas\Documents\GitHub\ProgramavimoAplinkosLab\DataProcessing\DataProcessing\obj\Debug\netcoreapp3.1\DataProcessing.dll
+C:\Users\Laurynas\Documents\GitHub\ProgramavimoAplinkosLab\DataProcessing\DataProcessing\obj\Debug\netcoreapp3.1\DataProcessing.pdb
+C:\Users\Laurynas\Documents\GitHub\ProgramavimoAplinkosLab\DataProcessing\DataProcessing\obj\Debug\netcoreapp3.1\DataProcessing.genruntimeconfig.cache
