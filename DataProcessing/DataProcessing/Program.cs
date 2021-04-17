@@ -8,7 +8,7 @@ namespace DataProcessing
     {
         static void Main(string[] args)
         {
-            if (File.Exists("students1.txt")&& File.Exists("students2.txt") && File.Exists("students3.txt") && File.Exists("students4.txt"))
+            if (File.Exists("students1.txt") && File.Exists("students2.txt") && File.Exists("students3.txt") && File.Exists("students4.txt"))
             {
                 File.Delete("students1.txt");
                 File.Delete("students2.txt");
@@ -24,7 +24,7 @@ namespace DataProcessing
                 fs4.Close();
 
             }
-            
+
             generateStudents("students1.txt", 10000);
             //generateStudents("students2.txt", 100000);
             //generateStudents("students3.txt", 1000000);
@@ -37,8 +37,9 @@ namespace DataProcessing
                 Console.Clear();
                 Console.WriteLine("1. Add student");
                 Console.WriteLine("2. Add students from file");
-                Console.WriteLine("3. display students");
-                Console.WriteLine("4. Exit");
+                Console.WriteLine("3. Display student list");
+                Console.WriteLine("4. Filter by failed and passed");
+                Console.WriteLine("5. Exit");
                 switch (Console.ReadLine())
                 {
                     case "1":
@@ -72,6 +73,23 @@ namespace DataProcessing
                         displayStudents(studentList);
                         break;
                     case "4":
+                        if (studentList.Count > 0)
+                        {
+                            filterFailedPassed(studentList);
+                            Console.Clear();
+                            Console.WriteLine("successfully filtered");
+                            Console.ReadKey();
+                        }
+
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Nothing to filter empty student list");
+                            Console.ReadKey();
+
+                        }
+                        break;
+                    case "5":
                         menuFlag = false;
                         break;
                 }
@@ -95,13 +113,13 @@ namespace DataProcessing
             int median = (size % 2 != 0) ? (int)sortedNum[mid] : ((int)sortedNum[mid] + (int)sortedNum[mid - 1]) / 2;
             return median;
         }
-        public static void generateStudents(string path,int amount)
+        public static void generateStudents(string path, int amount)
         {
             Random rnd = new Random();
             using (var stream = new StreamWriter(File.OpenWrite(path)))
             {
                 stream.WriteLine("Surname Name HW1 HW2 HW3 HW4 HW5 Exam");
-                for (int i = 1; i <= amount;i++)
+                for (int i = 1; i <= amount; i++)
                 {
 
                     stream.WriteLine("Surname" + i + " Name" + i + " " + rnd.Next(1, 11) + " " + rnd.Next(1, 11) + " " + rnd.Next(1, 11) + " " + rnd.Next(1, 11) + " " + rnd.Next(1, 11) + " " + rnd.Next(1, 11));
@@ -232,7 +250,7 @@ namespace DataProcessing
                         }
                         Console.Clear();
                         Console.WriteLine("Exam Result added\n");
-                        homeworkFlag = false;                        
+                        homeworkFlag = false;
                         break;
                 }
             }
@@ -262,6 +280,41 @@ namespace DataProcessing
             return student;
         }
 
+        public static void filterFailedPassed(List<Student> studentList)
+        {
+            if (File.Exists("passed.txt") && File.Exists("failed.txt"))
+            {
+                File.Delete("passed.txt");
+                File.Delete("failed.txt");
+                FileStream fs1 = File.Create("passed.txt");
+                FileStream fs2 = File.Create("failed.txt");
+                fs1.Close();
+                fs2.Close();
+            }
+            var streamP = new StreamWriter(File.OpenWrite("passed.txt"));
+            var streamF = new StreamWriter(File.OpenWrite("failed.txt"));
+            streamP.WriteLine("Surname Name Avg");
+            streamF.WriteLine("Surname Name Avg");
+            foreach (var item in studentList)
+            {
+                double avg = 0;
+                foreach (var result in item.results)
+                {
+                    avg = avg + result;
+                }
+                double finalPoints = ((avg / item.results.Count) * 0.3) + (item.ExamResult * 0.7);
 
+                if (finalPoints >= 5)
+                {
+                    streamP.WriteLine("{0} {1} {2:N2}", item.LastName, item.Name, finalPoints);
+                }
+                else
+                {
+                    streamF.WriteLine("{0} {1} {2:N2}", item.LastName, item.Name, finalPoints);
+                }
+
+
+            }
+        }
     }
 }
