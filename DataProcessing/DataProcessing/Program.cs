@@ -2,28 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Diagnostics;
+using System.Threading;
 namespace DataProcessing
 {
     class Program
     {
         static void Main(string[] args)
         {
-            if (File.Exists("students1.txt") || File.Exists("students2.txt") || File.Exists("students3.txt") || File.Exists("students4.txt"))
-            {
-                File.Delete("students1.txt");
-                File.Delete("students2.txt");
-                File.Delete("students3.txt");
-                File.Delete("students4.txt");
-                FileStream fs1 = File.Create("students1.txt");
-                FileStream fs2 = File.Create("students2.txt");
-                FileStream fs3 = File.Create("students3.txt");
-                FileStream fs4 = File.Create("students4.txt");
-                fs1.Close();
-                fs2.Close();
-                fs3.Close();
-                fs4.Close();
+            Stopwatch stopwatch = new Stopwatch();
 
-            }          
+       
             List<Student> studentList = new List<Student>();
             bool menuFlag = true;
 
@@ -69,16 +58,17 @@ namespace DataProcessing
                         Console.WriteLine("4. File with 10000000 students");
                         switch (Console.ReadLine())
                         {
-                            case "1":
-                                generateStudents("students1.txt", 10000);
+                            case "1":                               
+                                generateStudents("students1.txt", 10000);                                                                                          
                                 studentList = addStudentsFromFile("students1.txt").ToList();
                                 break;
-                            case "2":
+                            case "2":                               
                                 generateStudents("students2.txt", 100000);
                                 studentList = addStudentsFromFile("students2.txt").ToList();
                                 break;
                             case "3":
                                 generateStudents("students3.txt", 1000000);
+
                                 studentList = addStudentsFromFile("students3.txt").ToList();
                                 break;
                             case "4":
@@ -206,7 +196,9 @@ namespace DataProcessing
                             studentFile.ExamResult = Int32.Parse(values[7]);
                             studentList.Add(studentFile);
                         }
+                        
                     }
+                    sr.Close();
                     Console.Clear();
                     Console.WriteLine("Added students from file");
                     Console.ReadKey();
