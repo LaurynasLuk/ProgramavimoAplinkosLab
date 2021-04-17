@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-
+using System.Linq;
 namespace DataProcessing
 {
     class Student
@@ -37,8 +37,9 @@ namespace DataProcessing
             {
                 Console.Clear();
                 Console.WriteLine("1. Add student");
-                Console.WriteLine("2. display students");
-                Console.WriteLine("3. Exit");
+                Console.WriteLine("2. Add students from file");
+                Console.WriteLine("3. display students");
+                Console.WriteLine("4. Exit");
                 switch (Console.ReadLine())
                 {
                     case "1":
@@ -91,54 +92,59 @@ namespace DataProcessing
 
                         break;
                     case "2":
-                        Console.Clear();
-                        Console.WriteLine("1. Display with average results");
-                        Console.WriteLine("2. Display with median results");
-                        switch (Console.ReadLine())
+
+                        using (var sr = new StreamReader("students.txt"))
                         {
-                            case "1":
-                                Console.Clear();
-                                if (studentList.Count == 0) Console.WriteLine("No registered students");
-                                else
+                            sr.ReadLine();
+                            while (!sr.EndOfStream)
+                            {
+                                Student studentFile = new Student();
+                                var line = sr.ReadLine();
+                                var values = line.Split();
+                                if (line.Split().Length > 2)
                                 {
-                                    Console.WriteLine("Surname              Name               Final Points(Avg.)");
-                                    Console.WriteLine("----------------------------------------------------------");
-                                    foreach (var item in studentList)
+                                    studentFile.LastName = values[0];
+                                    studentFile.Name = values[1];
+                                    for (int i = 2; i < 8; i++)
                                     {
-                                        double avg = 0;
-                                        foreach (var result in item.results)
-                                        {
-                                            avg = avg + result;
-                                        }
-                                        if (avg > 0) Console.WriteLine(String.Format("|{0,-19} | {1,-16} | {2:N2}", item.LastName, item.Name, avg / item.results.Count));
-                                        else Console.WriteLine(String.Format("|{0,-19} | {1,-16} | {2}", item.LastName, item.Name, "No results achieved"));
-
+                                        studentFile.results.Add(Int32.Parse(values[i]));
                                     }
-                                    Console.ReadKey();
+                                    studentList.Add(studentFile);
                                 }
-                                break;
-
-                            case "2":
-                                Console.Clear();
-                                if (studentList.Count == 0) Console.WriteLine("No registered students");
-                                else
-                                {
-                                    Console.WriteLine("Surname              Name               Final points (Med.)");
-                                    Console.WriteLine("-----------------------------------------------------------");
-                                    foreach (var item in studentList)
-                                    {
-
-                                        if (item.results.Count > 0) Console.WriteLine(String.Format("|{0,-19} | {1,-16} | {2}", item.LastName, item.Name, GetMedian(item.results)));
-                                        else Console.WriteLine(String.Format("|{0,-19} | {1,-16} | {2}", item.LastName, item.Name, "No results achieved"));
-
-                                    }
-                                    Console.ReadKey();
-                                }
-                                break;
-
+                            }
+                            Console.Clear();
+                            Console.WriteLine("Added students from file");
+                            Console.ReadKey();
                         }
                         break;
                     case "3":
+                        Console.Clear();
+                        List<Student> sortedList = studentList.OrderBy(student => student.LastName).ToList();
+                        if (studentList.Count == 0)
+                        {
+                            Console.WriteLine("No registered students");
+                            Console.ReadKey();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Surname            Name            Final Points(Med.) Final points (Avg.)");
+                            Console.WriteLine("-----------------------------------------------------------------------------------------");
+
+                            foreach (var item in sortedList)
+                            {
+                                double avg = 0;
+                                foreach (var result in item.results)
+                                {
+                                    avg = avg + result;
+                                }
+                                if (avg > 0) Console.WriteLine(String.Format("|{0,-16} |{1,-15} |{2,-17} |{3:N2}", item.LastName, item.Name, GetMedian(item.results), avg / item.results.Count));
+                                else Console.WriteLine(String.Format("|{0,-16} |{1,-15} |{2,-17} |{3}", item.LastName, item.Name, "No results achieved", "No results achieved"));
+
+                            }
+                            Console.ReadKey();
+                        }
+                        break;
+                    case "4":
                         menuFlag = false;
                         break;
                 }
@@ -148,7 +154,7 @@ namespace DataProcessing
 
         }
 
-        public static double GetMedian(List<int> results)
+        public static int GetMedian(List<int> results)
         {
             if (results == null || results.Count == 0)
                 throw new System.Exception("Median of empty array not defined.");
@@ -159,7 +165,7 @@ namespace DataProcessing
 
             int size = sortedNum.Length;
             int mid = size / 2;
-            double median = (size % 2 != 0) ? (double)sortedNum[mid] : ((double)sortedNum[mid] + (double)sortedNum[mid - 1]) / 2;
+            int median = (size % 2 != 0) ? (int)sortedNum[mid] : ((int)sortedNum[mid] + (int)sortedNum[mid - 1]) / 2;
             return median;
         }
     }
