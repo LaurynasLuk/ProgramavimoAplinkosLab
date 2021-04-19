@@ -14,6 +14,8 @@ namespace DataProcessing
 
        
             List<Student> studentList = new List<Student>();
+            LinkedList<Student> linkedStudentList = new LinkedList<Student>();
+            Queue<Student> studentQueue = new Queue<Student>();
             bool menuFlag = true;
 
             while (menuFlag)
@@ -58,9 +60,11 @@ namespace DataProcessing
                         Console.WriteLine("4. File with 10000000 students");
                         switch (Console.ReadLine())
                         {
-                            case "1":                               
-                                generateStudents("students1.txt", 10000);                                                                                          
+                            case "1":
+                                
+                                generateStudents("students1.txt", 10000);
                                 studentList = addStudentsFromFile("students1.txt").ToList();
+
                                 break;
                             case "2":                               
                                 generateStudents("students2.txt", 100000);
@@ -293,15 +297,7 @@ namespace DataProcessing
 
         public static void filterFailedPassed(List<Student> studentList)
         {
-            if (File.Exists("passed.txt") && File.Exists("failed.txt"))
-            {
-                File.Delete("passed.txt");
-                File.Delete("failed.txt");
-                FileStream fs1 = File.Create("passed.txt");
-                FileStream fs2 = File.Create("failed.txt");
-                fs1.Close();
-                fs2.Close();
-            }
+
             var streamP = new StreamWriter(File.OpenWrite("passed.txt"));
             var streamF = new StreamWriter(File.OpenWrite("failed.txt"));
             streamP.WriteLine("Surname Name Avg");
@@ -327,5 +323,18 @@ namespace DataProcessing
 
             }
         }
+
+        public static void filterFailedPassedQueue(List<Student> studentList)
+        {
+
+        }
+
+        public static void filterFailedPassedLinkedList(List<Student> studentList)
+        {
+            LinkedList<Student> linkedStudentList = new LinkedList<Student>(studentList);
+
+        }
+
+
     }
 }
