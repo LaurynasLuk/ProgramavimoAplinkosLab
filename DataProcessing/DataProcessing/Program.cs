@@ -87,7 +87,7 @@ namespace DataProcessing
                     case "4":
                         if (studentList.Count > 0)
                         {
-                            filterFailedPassed(studentList);
+                            filterFailedPassedQueue(studentList);
                             Console.Clear();
                             Console.WriteLine("successfully filtered");
                             Console.ReadKey();
@@ -326,13 +326,60 @@ namespace DataProcessing
 
         public static void filterFailedPassedQueue(List<Student> studentList)
         {
+            Queue<Student> studentQueue = new Queue<Student>(studentList);
+            var streamP = new StreamWriter(File.OpenWrite("passed.txt"));
+            var streamF = new StreamWriter(File.OpenWrite("failed.txt"));
+            streamP.WriteLine("Surname Name Avg");
+            streamF.WriteLine("Surname Name Avg");
+            foreach (var item in studentQueue)
+            {
+                double avg = 0;
+                foreach (var result in item.results)
+                {
+                    avg = avg + result;
+                }
+                double finalPoints = ((avg / item.results.Count) * 0.3) + (item.ExamResult * 0.7);
 
+                if (finalPoints >= 5)
+                {
+                    streamP.WriteLine("{0} {1} {2:N2}", item.LastName, item.Name, finalPoints);
+                }
+                else
+                {
+                    streamF.WriteLine("{0} {1} {2:N2}", item.LastName, item.Name, finalPoints);
+                }
+
+
+            }
         }
 
         public static void filterFailedPassedLinkedList(List<Student> studentList)
         {
             LinkedList<Student> linkedStudentList = new LinkedList<Student>(studentList);
+            var streamP = new StreamWriter(File.OpenWrite("passed.txt"));
+            var streamF = new StreamWriter(File.OpenWrite("failed.txt"));
+            streamP.WriteLine("Surname Name Avg");
+            streamF.WriteLine("Surname Name Avg");
+            foreach (var item in linkedStudentList)
+            {
+                double avg = 0;
+                foreach (var result in item.results)
+                {
+                    avg = avg + result;
+                }
+                double finalPoints = ((avg / item.results.Count) * 0.3) + (item.ExamResult * 0.7);
 
+                if (finalPoints >= 5)
+                {
+                    streamP.WriteLine("{0} {1} {2:N2}", item.LastName, item.Name, finalPoints);
+                }
+                else
+                {
+                    streamF.WriteLine("{0} {1} {2:N2}", item.LastName, item.Name, finalPoints);
+                }
+
+
+            }
         }
 
 
