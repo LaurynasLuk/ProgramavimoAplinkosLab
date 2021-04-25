@@ -69,12 +69,10 @@ namespace DataProcessing
                             case "2":                               
                                 generateStudents("students2.txt", 100000);
                                 studentList = addStudentsFromFile("students2.txt").ToList();
-                                Console.WriteLine("Elapsed Time is {0} ms", stopwatch.Elapsed);
                                 break;
                             case "3":
                                 generateStudents("students3.txt", 1000000);
                                 studentList = addStudentsFromFile("students3.txt").ToList();
-                                Console.WriteLine("Elapsed Time is {0} ms", stopwatch.Elapsed);
                                 break;
                             case "4":
                                 generateStudents("students4.txt", 10000000);
