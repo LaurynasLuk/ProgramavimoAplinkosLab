@@ -60,24 +60,27 @@ namespace DataProcessing
                         Console.WriteLine("4. File with 10000000 students");
                         switch (Console.ReadLine())
                         {
-                            case "1":
-                                
+                            case "1":                               
                                 generateStudents("students1.txt", 10000);
                                 studentList = addStudentsFromFile("students1.txt").ToList();
-
+                               
+                               
                                 break;
                             case "2":                               
                                 generateStudents("students2.txt", 100000);
                                 studentList = addStudentsFromFile("students2.txt").ToList();
+                                Console.WriteLine("Elapsed Time is {0} ms", stopwatch.Elapsed);
                                 break;
                             case "3":
                                 generateStudents("students3.txt", 1000000);
-
                                 studentList = addStudentsFromFile("students3.txt").ToList();
+                                Console.WriteLine("Elapsed Time is {0} ms", stopwatch.Elapsed);
                                 break;
                             case "4":
                                 generateStudents("students4.txt", 10000000);
+
                                 studentList = addStudentsFromFile("students4.txt").ToList();
+
                                 break;
                         }
                         break;
@@ -87,7 +90,8 @@ namespace DataProcessing
                     case "4":
                         if (studentList.Count > 0)
                         {
-                            filterFailedPassedQueue(studentList);
+
+                            filterFailedPassedLinkedList(studentList);
                             Console.Clear();
                             Console.WriteLine("successfully filtered");
                             Console.ReadKey();
@@ -186,7 +190,7 @@ namespace DataProcessing
                         Student studentFile = new Student();
                         var line = sr.ReadLine();
                         var values = line.Split();
-                        if (line.Split().Length > 2)
+                        if (line.Split().Length > 7)
                         {
                             studentFile.LastName = values[0];
                             studentFile.Name = values[1];
